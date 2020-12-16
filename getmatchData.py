@@ -2,27 +2,32 @@ import pandas as pd
 import time
 from requests import get
 from ConstURL import ConstURL
-
+import json
+import os
 ConstURL = ConstURL()
 apiKey = ConstURL.apiKey
 mainUrl = ConstURL.mainUrl
 
-def getMatchlists(accountId, endIndex = "30"):
-    return get(mainUrl + "/lol/match/v4/matchlists/by-account/"+accountId+"?endIndex="+endIndex+"&api_key=" +apiKey).json()
+def getMatch(gameId):
+    return get(mainUrl + "/lol/match/v4/matches/"+ gameId +"?api_key="+apiKey).json()
+    
 
-prodata = pd.read_csv('nickplusID.csv',index_col= 0 ,header=0)
-
-
-
-for nickname, accountId in zip(prodata["nickname"], prodata["accountId"]):
+#match ID is int but getMatch need str data
+players = os.listdir("player")
+for player in players:
+    print(player)
+    matchs = pd.read_csv(f"player/{player}", header = 0 , index_col = 0)
     try:
-        matches = getMatchlists(accountId,"30")['matches']
-        matchDf = pd.DataFrame(matches)
-        matchDf.to_csv(f"player/{nickname}.csv", mode='w')
+        for matchId in matchs["gameId"].iloc[:10]:
+            match = getMatch(str(matchId))
+            file_path = f"match/{matchId}.json"
+            with open(file_path, 'w') as outfile:
+                json.dump(match, outfile, indent = 4)
+            time.sleep(1.3)
     except:
-        matchDf = pd.DataFrame()
-        matchDf.to_csv(f"fail/Fail_{nickname}.csv", mode='w')
         pass
-    time.sleep(1.3)
 
 
+
+
+# python3 getmatchData.py
