@@ -37,7 +37,7 @@ for i in prodata.loc[:,"id"]:
         newpd = newpd.append(sumDict, ignore_index=True)
     except:
         pass
-# 씨발
+
 newpd.to_csv("MyDrive/filename5.csv", mode="w")
 
 # FakerAccId = getSummonerAccountId("Hide On Bush")
