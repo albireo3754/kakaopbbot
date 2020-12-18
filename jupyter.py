@@ -1,6 +1,7 @@
 
 # http://ddragon.leagueoflegends.com/cdn/10.24.1/data/ko_KR/runesReforged.json rune
 # https://raw.communitydragon.org/10.24/game/assets/perks/styles/ link
+#  http://ddragon.leagueoflegends.com/cdn/10.24.1/data/ko_KR/champion.json
 mainUrl = "https://kr.api.riotgames.com"
 apiKey = "RGAPI-4858451d-c548-4ea0-8624-9c15c9124a77"
 prodata = pd.read_csv('MyDrive/filename.csv',index_col= 0 ,header=0)
