@@ -11,13 +11,13 @@ for i in data:
     # chamEname = i                 Aatrox
     # chamKname = data[i]["name"] 아트록스
 
-    chamkey = data[i]["key"]
+    chamkey = int(data[i]["key"])
     chamEname = i
     chamKname = data[i]["name"]
     
-    chamDict[chamkey] = {"chamEname":i, "chamKname":chamKname}
+    chamDict[chamkey] = {"ename":i, "kname":chamKname}
 
-with open("champion.json", "w") as outfile:  
+with open("jsonCol/champion.json", "w") as outfile:  
     json.dump(chamDict, outfile) 
 
 

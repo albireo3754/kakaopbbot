@@ -14,16 +14,16 @@ for i in data:
     runekey = i["id"]
     runeEname = i["key"]
     runeKname = i["name"]
-    print(runeKname)    
-    runeDict[runekey] = {"runeEname":runeEname, "runeKname":runeKname}
+
+    runeDict[runekey] = {"ename":runeEname, "kname":runeKname}
     for j in i["slots"]:
         for k in j["runes"]:
             runekey = k["id"]
             runeEname = k["key"]
             runeKname = k["name"]       
             print(runeKname)
-            runeDict[runekey] = {"runeEname":runeEname, "runeKname":runeKname}
-with open("rune.json", "w") as outfile:  
+            runeDict[runekey] = {"ename":runeEname, "kname":runeKname}
+with open("jsonCol/rune.json", "w") as outfile:  
     json.dump(runeDict, outfile) 
 
 
