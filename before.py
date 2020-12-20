@@ -1,7 +1,11 @@
 import pandas as pd
 import os
 import json
+from pymongo import MongoClient
+client = MongoClient()
 
+pro = client["pro"]
+champion = client["champion"]
 prodata = pd.read_csv('nickplusID.csv',index_col= 0 ,header=0)
 
 koreanPros = prodata.loc[lambda df: df["country"] == "Korea"]["nickname"]
@@ -72,6 +76,7 @@ def test():
     data = GetData()
     for koreanPro in koreanPros:
         # print(koreanPro)
+        #Keria
         kPro = nicknameToSummonername(koreanPro,prodata)
 
         for jsonURL in os.listdir(f"match/{koreanPro}"):
@@ -82,18 +87,32 @@ def test():
             # print(participantId)
             #find participantId
             try:
+                if json_data["queueId"] != 420:
+                    raise IndexError
+                time = json_data["gameId"]
                 gameData = json_data["participants"][participantId]
-                champion = data.getChampionName(gameData["championId"])
+                championName = data.getChampionName(gameData["championId"])
                 spell1Id = data.getSpellName(gameData["spell1Id"])
                 spell2Id = data.getSpellName(gameData["spell2Id"])
+
                 # 7th item is ward or lens
-                item = [data.getItemName(gameData["stats"][f"item{i}"]) for i in range(7)]
-                rune = [data.getRuneName(gameData["stats"][f"perk{i}"]) for i in range(6)]
-                print(item)
+                itemName = [data.getItemName(gameData["stats"][f"item{i}"]) for i in range(7)]
+                runeName = [data.getRuneName(gameData["stats"][f"perk{i}"]) for i in range(6)]
+
+                proCollection = pro[kPro]
+
+                proCollection.insert_one({"_id": kPro})
+
+                chamCollection = champion[championName]
+
+                chamCollection.insert_one({"_id": championName}).inserted_id
+
             except IndexError:
                 # json data get error 
                 pass
-
+            
+            break
+        break
 
 if __name__ == "__main__":
     
