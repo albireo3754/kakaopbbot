@@ -77,9 +77,10 @@ def test():
     for koreanPro in koreanPros:
         # print(koreanPro)
         #Keria
-        kPro = nicknameToSummonername(koreanPro,prodata)
+        
 
         for jsonURL in os.listdir(f"match/{koreanPro}"):
+            kPro = nicknameToSummonername(koreanPro,prodata)
             with open(f"match/{koreanPro}/{jsonURL}") as json_file:
                 json_data = json.load(json_file)
 
@@ -89,7 +90,7 @@ def test():
             try:
                 if json_data["queueId"] != 420:
                     raise IndexError
-                time = json_data["gameId"]
+                time = json_data["gameCreation"]
                 gameData = json_data["participants"][participantId]
                 championName = data.getChampionName(gameData["championId"])
                 spell1Id = data.getSpellName(gameData["spell1Id"])
@@ -98,21 +99,24 @@ def test():
                 # 7th item is ward or lens
                 itemName = [data.getItemName(gameData["stats"][f"item{i}"]) for i in range(7)]
                 runeName = [data.getRuneName(gameData["stats"][f"perk{i}"]) for i in range(6)]
-
+                statPerk = []
                 proCollection = pro[kPro]
 
-                proCollection.insert_one({"_id": kPro})
+                proCollection.insert_one({"_id": {"time":str(time), "proName":"kPro"}, 
+                "champion":championName, "spell":{"spell1Id":spell1Id,"spell2Id":spell2Id},
+                "itemName":itemName, "runeName":runeName})
 
                 chamCollection = champion[championName]
-
-                chamCollection.insert_one({"_id": championName}).inserted_id
-
+                
+                chamCollection.insert_one({"_id": {"time":str(time), "champion":championName}, 
+                "proName":"kPro", "spell":{"spell1Id":spell1Id,"spell2Id":spell2Id},
+                "itemName":itemName, "runeName":runeName})
+                print(kPro)
             except IndexError:
+                print(f"error{kPro}")
                 # json data get error 
                 pass
             
-            break
-        break
 
 if __name__ == "__main__":
     
