@@ -40,6 +40,27 @@ class Player(Resource):
         return task, 201
 todos = {}
 
+def makeoutput(item):
+    return {
+            "title": item,
+            "description": item,
+            "imageUrl": f"http://ddragon.leagueoflegends.com/cdn/10.25.1/img/item/{item}.png",
+            "link": {
+                "web": "https://namu.wiki/w/%EB%9D%BC%EC%9D%B4%EC%96%B8(%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%94%84%EB%A0%8C%EC%A6%88)"
+            }
+            }
+def output(items):
+    
+    return {
+            "version": "2.0",
+            "template":{
+                "outputs": [{
+                    "listCard": {
+                        "header": {"title": "아이템"},
+                        "items": [makeoutput(item) for item in items]
+                        }}]}
+            }
+
 class Champion(Resource):
     
     def post(self):
@@ -51,16 +72,19 @@ class Champion(Resource):
         param = action['params']
         champName = param['champion']
         print(champName)
-        return {"version": "2.0",
-                "template": {
-                "outputs": [
-                {
-                    "simpleText": 
-                    {
-                        "text": f"아칼리 룬은 {data.findOne(champName)["runeName"]}"
-                    }
-                }
-                ]}}
+        rune = data.findOne(champName)["itemName"]
+        print(rune)
+        return output(rune)
+        # return {"version": "2.0",
+        #         "template": {
+        #         "outputs": [
+        #         {
+        #             "simpleText": 
+        #             {
+        #                 "text": f"{champName} 아이템은 {rune} 입니다."
+        #             }
+        #         }
+        #         ]}}
 
 
         # args = parser.parse_args()
