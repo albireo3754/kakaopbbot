@@ -41,6 +41,18 @@ class Player(Resource):
 todos = {}
 
 def makeoutput(item):
+    if item == None:
+
+        return {
+            "title": "item",
+            "description": "item",
+            "imageUrl": f"https://www.gor-holidays-days-2-30-6753651837108830.5-s.png",
+            "altText" : "item",
+            "link": {
+                "web": "https://namu.wiki/w/%EB%9D%BC%EC%9D%B4%EC%96%B8(%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%94%84%EB%A0%8C%EC%A6%88)"
+            }
+            }
+
     return {
             "title": item,
             "description": item,
