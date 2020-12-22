@@ -104,6 +104,7 @@ def test():
                 continue
 
             participantId = findParticipantId(json_data, name)
+            
             if participantId == None:
                 continue
             
@@ -111,31 +112,35 @@ def test():
             #find participantId
             try:
                 time = json_data["gameCreation"]
-                gameData = json_data["participants"][participantId]
-
+                # print(participantId)
+                gameData = json_data["participants"][participantId-1]
+                # print(gameData)
                 championEName = data.getChampionEName(gameData["championId"])
                 championKName = data.getChampionKName(gameData["championId"])
 
-
+                stats = gameData["stats"]
                 spellName = [data.getSpellName(gameData[f"spell{i}Id"]) for i in range(1,3)]
                 # 7th item is ward or lens
                 itemName = [data.getItemName(gameData["stats"][f"item{i}"]) for i in range(7)]
                 runeName = [data.getRuneName(gameData["stats"][f"perk{i}"]) for i in range(6)]
                 statPerk = [str(gameData["stats"][f"statPerk{i}"]) for i in range(3)]
 
+                (kill, deaths, assists) = (stats["kills"], stats["deaths"], stats["assists"])
+                kda = f"{kill} / {deaths} / {assists}"
+
                 proCollection = pro[nickname]
                 proCollection.insert_one(
                 {"_id": str(time), 
                 "champion":{"en":championEName, "ko":championKName}, "statPerk": statPerk, 
                 "proInf": {"name" : nickname, "team": team, "summonername": name},
-                "spell":spellName, "itemName":itemName, "runeName":runeName})
+                "spell":spellName, "itemName":itemName, "runeName":runeName, "kda": kda})
 
                 chamCollection = champion[championKName]
                 chamCollection.insert_one(
                 {"_id": str(time), 
                 "champion":{"en":championEName, "ko":championKName}, "statPerk": statPerk, 
                 "proInf": {"name" : nickname, "team": team, "summonername": name},
-                "spell":spellName, "itemName":itemName, "runeName":runeName})
+                "spell":spellName, "itemName":itemName, "runeName":runeName, "kda": kda})
                 
             except IndexError as e:
                 print(f"error{nickname} and {e}")
