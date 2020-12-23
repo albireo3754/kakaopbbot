@@ -65,6 +65,26 @@ class Bot:
             "link": {
                 "web": "https://namu.wiki/w/%EB%9D%BC%EC%9D%B4%EC%96%B8(%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%94%84%EB%A0%8C%EC%A6%88)"
             }}
+
+    def makeCarouselBasicCard(self,items):
+        return {"carousel":{"type": "basicCard", "items": items}}
+    
+    def makeBasicCard(self,buttons):
+        return {
+            "title": title,
+            "description": description,
+            "tumbnail":{
+                "imageUrl": link
+            },
+            "buttons":buttons
+        }
+
+    def makeButton(self):
+        return {
+            "action": action,
+            "label": label,
+            "messageText:"
+        }
 class Player(Resource):
     def __init__(self):
         pass
