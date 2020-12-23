@@ -18,6 +18,7 @@ class Data:
         lists = []
         for i in self.CHAMPION[name].find().sort("_id", pymongo.DESCENDING).limit(5):
             lists.append(i)
+
         return lists
 
     def findOne(self, name):
@@ -53,10 +54,13 @@ class Bot:
         time = datetime.fromtimestamp(int(doc['_id'])//1000).strftime('%m-%d/%H:%M')
         kda = doc["kda"]
         proInf = doc['proInf']
+        Domination = doc['runeDetail'][0]['color']
+    
+        Electrocute = doc['runeName'][0]
         return {
             "title": f"{proInf['name']}({proInf['summonername']})",
-            "description": f"{time} {kda}",
-            "imageUrl": f"http://ddragon.leagueoflegends.com/cdn/10.25.1/img/item/.png",
+            "description": f"Kda:{kda} , Time: {time}",
+            "imageUrl": f"http://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/{Domination}/{Electrocute}/{Electrocute}.png",
             "altText" : f"{None}",
             "link": {
                 "web": "https://namu.wiki/w/%EB%9D%BC%EC%9D%B4%EC%96%B8(%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%94%84%EB%A0%8C%EC%A6%88)"
@@ -73,6 +77,7 @@ class Champion(Resource, Bot):
         data = Data()
         # args = parser.parse_args()
         jsonData = request.get_json()
+
         # print(jsonData)
         action = jsonData['action']
         param = action['params']
@@ -84,6 +89,7 @@ class Champion(Resource, Bot):
             return {"기록이없음을 알리는간단한 메시지~~ (나중에만들기)"}
 
         docs = [self.makeMatchListItem(document) for document in documents]
+
         output = self.makeListCard(f"{champName} 플레이 목록(최신순)", docs)
         
 

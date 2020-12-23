@@ -23,7 +23,7 @@ for i in data:
             print(runeKname)
             runeDict[runekey] = {"ename":runeEname, "kname":runeKname, "color": runeColor}
 with open("jsonCol/rune.json", "w") as outfile:  
-    json.dump(runeDict, outfile) 
+    json.dump(runeDict, outfile)
 
 
 
