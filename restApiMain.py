@@ -9,6 +9,7 @@ import pymongo
 
 # parser = reqparse.RequestParser()
 # parser.add_argument('action', action='append')
+
 class Data:
     CLIENT = MongoClient("mongodb://localhost:27017/")
     PLAYER = CLIENT["pro"]
@@ -27,9 +28,12 @@ class Data:
 
 class Bot:
     #output will be [{"listcard": ~~}]
-    def makeOutput(self, outputs):
-        return {"version": "2.0","template":{"outputs": outputs}}
-
+    def makeSkillResponse(self, outputs, contexts = None):
+        if type(outputs) is not list:
+            outputs = [outputs]
+        if context is None:
+            return {"version": "2.0","template":{"outputs": outputs}}
+        return {"version": "2.0","template":{"outputs": outputs}, "context":{"values": contexts}}
     def makeQuickReply(self, replies):
         return {"version": "2.0","template":{"quickReplies": replies}}
 
@@ -55,8 +59,8 @@ class Bot:
         kda = doc["kda"]
         proInf = doc['proInf']
         Domination = doc['runeDetail'][0]['color']
-    
         Electrocute = doc['runeName'][0]
+
         return {
             "title": f"{proInf['name']}({proInf['summonername']})",
             "description": f"Kda:{kda} , Time: {time}",
@@ -66,31 +70,98 @@ class Bot:
                 "web": "https://namu.wiki/w/%EB%9D%BC%EC%9D%B4%EC%96%B8(%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%94%84%EB%A0%8C%EC%A6%88)"
             }}
 
-    def makeCarouselBasicCard(self,items):
-        return {"carousel":{"type": "basicCard", "items": items}}
+    def makeCarousel(self, items, _type = "basicCard"):
+        """[summary]
+
+        Arguments:
+            items {[list]} -- [max 10, basicCard list]
+
+        Keyword Arguments:
+            _type {str} -- [description] (default: {"basicCard"})
+
+        Returns:
+            [type] -- [description]
+        """
+        return {"carousel":{"type": _type, "items": items}}
     
-    def makeBasicCard(self,buttons):
+    def makeBasicCard(self, title, description, thumbnail, buttons):
+        print(description)
         return {
             "title": title,
             "description": description,
-            "tumbnail":{
-                "imageUrl": link
+            "thumbnail":{
+                "imageUrl": thumbnail
             },
             "buttons":buttons
         }
+    
+    def makeIntroCard(self, doc, buttons, cardFunc):
+        time = datetime.fromtimestamp(int(doc['_id'])//1000).strftime('%m-%d/%H:%M')
+        kda = doc["kda"]
+        proInf = doc['proInf']
+        Domination = doc['runeDetail'][0]['color']
+        Electrocute = doc['runeName'][0]
 
-    def makeButton(self):
+        title = f"{proInf['name']}({proInf['summonername']})"
+        description = f"Kda:{kda} Time: {time}"
+        thumbnail = f"http://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/{Domination}/{Electrocute}/{Electrocute}.png"
+            
+        return cardFunc(title,description,thumbnail,buttons)
+    def makeButton(self, label, action, messageText):
         return {
-            "action": action,
             "label": label,
-            "messageText:"
+            "action": action,
+            "messageText": messageText
         }
+
+    def makeButtons(self):
+        runeButton = self.makeButton(label="룬 보러가기",action="message",messageText="룬이요")
+        itemButton = self.makeButton(label="최종아이템 보러가기",action="message",messageText="아이템이요")
+        skillButton = self.makeButton(label="스킬트리 보러가기",action="message",messageText="스킬트리요")
+        return [runeButton,itemButton,skillButton]
+    def makeThmbnail(self, imageUrl):
+        return {
+            "imageUrl": imageUrl
+        }
+    
+    def makeSimpleText(self, text):
+        return {
+            "simpleText": {"text": text}
+        }
+
 class Player(Resource):
     def __init__(self):
         pass
 
-
 class Champion(Resource, Bot):
+    
+    def post(self):
+        data = Data()
+        # args = parser.parse_args()
+        jsonData = request.get_json()
+        # print(jsonData)
+        action = jsonData['action']
+        param = action['params']
+        champName = param['champion']
+        # print(champName)
+        documents = data.findList(champName)
+        print(3)
+        if len(documents) == 0:
+            print(4)
+            output = self.makeSimpleText("그런건 아무도 안해요 ㅠㅠ")
+            return self.makeSkillResponse(output)
+        
+        buttons = self.makeButtons()
+
+        basicCards = [self.makeIntroCard(doc, buttons, self.makeBasicCard) for doc in documents]
+
+        output = self.makeCarousel(basicCards)
+        print(output)
+        return self.makeSkillResponse(output)
+
+
+
+class Champion_v2(Resource, Bot):
     
     
     def post(self):
@@ -112,8 +183,7 @@ class Champion(Resource, Bot):
 
         output = self.makeListCard(f"{champName} 플레이 목록(최신순)", docs)
         
-
-        return self.makeOutput(output)
+        return self.makeSkillResponse(output)
 
 
 class Champion_v1(Resource, Bot):
@@ -139,7 +209,8 @@ class Champion_v1(Resource, Bot):
         output = self.makeListCard("itemlist", items)
         
         print(items)
-        return self.makeOutput(output)
+        return self.makeSkillResponse(output)
+
 
 #이제 시간순서대로 나오게만하면되겟네
 api.add_resource(Player, '/api/player/<pro_id>')
