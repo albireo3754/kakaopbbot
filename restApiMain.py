@@ -31,9 +31,13 @@ class Bot:
     def makeSkillResponse(self, outputs, contexts = None):
         if type(outputs) is not list:
             outputs = [outputs]
-        if context is None:
+        if contexts is None:
             return {"version": "2.0","template":{"outputs": outputs}}
+        
+        if type(contexts) is not list:
+            contexts = [contexts]
         return {"version": "2.0","template":{"outputs": outputs}, "context":{"values": contexts}}
+    
     def makeQuickReply(self, replies):
         return {"version": "2.0","template":{"quickReplies": replies}}
 
@@ -44,14 +48,14 @@ class Bot:
                     "items": items,
                     "buttons": buttons}}]
 
-    def makeListItem(self, item):
+    def makeListItem(self, title, description, imageUrl):
         return {
-            "title": f"{item}",
-            "description": f"{item}",
-            "imageUrl": f"http://ddragon.leagueoflegends.com/cdn/10.25.1/img/item/{item}.png",
-            "altText" : f"{item}",
+            "title": f"{title}",
+            "description": f"{description}",
+            "imageUrl": f"{imageUrl}",
+            "altText" : f"{title}",
             "link": {
-                "web": "https://namu.wiki/w/%EB%9D%BC%EC%9D%B4%EC%96%B8(%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%94%84%EB%A0%8C%EC%A6%88)"
+                "web": f"https://namu.wiki/w/{title}"
             }}
     
     def makeMatchListItem(self, doc):
@@ -85,7 +89,6 @@ class Bot:
         return {"carousel":{"type": _type, "items": items}}
     
     def makeBasicCard(self, title, description, thumbnail, buttons):
-        print(description)
         return {
             "title": title,
             "description": description,
@@ -96,14 +99,15 @@ class Bot:
         }
     
     def makeIntroCard(self, doc, buttons, cardFunc):
-        time = datetime.fromtimestamp(int(doc['_id'])//1000).strftime('%m-%d/%H:%M')
         kda = doc["kda"]
         proInf = doc['proInf']
         Domination = doc['runeDetail'][0]['color']
         Electrocute = doc['runeName'][0]
+        print(doc)
+        version = doc['version']
 
         title = f"{proInf['name']}({proInf['summonername']})"
-        description = f"Kda:{kda} Time: {time}"
+        description = f"Kda:{kda} version: {version}"
         thumbnail = f"http://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/{Domination}/{Electrocute}/{Electrocute}.png"
             
         return cardFunc(title,description,thumbnail,buttons)
@@ -114,11 +118,7 @@ class Bot:
             "messageText": messageText
         }
 
-    def makeButtons(self):
-        runeButton = self.makeButton(label="룬 보러가기",action="message",messageText="룬이요")
-        itemButton = self.makeButton(label="최종아이템 보러가기",action="message",messageText="아이템이요")
-        skillButton = self.makeButton(label="스킬트리 보러가기",action="message",messageText="스킬트리요")
-        return [runeButton,itemButton,skillButton]
+    
     def makeThmbnail(self, imageUrl):
         return {
             "imageUrl": imageUrl
@@ -129,6 +129,28 @@ class Bot:
             "simpleText": {"text": text}
         }
 
+    def makeContext(self, name, params, lifeSpan = 5, ttl = 60):
+        """[summary]
+
+        Arguments:
+            name {string} -- [description]
+            lifeSpan {int} -- [description]
+            params {dict} -- [description]
+
+        Returns:
+            context
+        """
+        return {
+            "name": name,
+            "lifeSpan": lifeSpan,
+            "ttl": ttl,
+            "params": params
+        }
+    def makeRISButtons(self, idx):
+        runeButton = self.makeButton(label="룬 보러가기",action="message",messageText=f"{idx}번 선수의 룬")
+        itemButton = self.makeButton(label="최종아이템 보러가기",action="message",messageText=f"{idx}번 선수의 아이템")
+        skillButton = self.makeButton(label="스킬트리 보러가기",action="message",messageText=f"{idx}번 선수의 스킬트리")
+        return [runeButton,itemButton,skillButton]
 class Player(Resource):
     def __init__(self):
         pass
@@ -141,80 +163,123 @@ class Champion(Resource, Bot):
         jsonData = request.get_json()
         # print(jsonData)
         action = jsonData['action']
-        param = action['params']
-        champName = param['champion']
+        print(jsonData['contexts'])
+        params = action['params']
+        champName = params['champion']
         # print(champName)
         documents = data.findList(champName)
-        print(3)
         if len(documents) == 0:
-            print(4)
             output = self.makeSimpleText("그런건 아무도 안해요 ㅠㅠ")
             return self.makeSkillResponse(output)
         
-        buttons = self.makeButtons()
-
-        basicCards = [self.makeIntroCard(doc, buttons, self.makeBasicCard) for doc in documents]
-
+        
+        basicCards = []
+        contexts = []
+        for idx,doc in enumerate(documents):
+            basicCards.append(self.makeIntroCard(doc, self.makeRISButtons(idx+1), self.makeBasicCard))
+            contexts.append(self.makeContext(f"select_champion_{idx+1}", 
+            {"runeName": doc['runeName'], "runeDetail": doc['runeDetail'],"itemKey": doc["itemName"]}))
+        
         output = self.makeCarousel(basicCards)
-        print(output)
-        return self.makeSkillResponse(output)
+        return self.makeSkillResponse(output, contexts)
 
-
-
-class Champion_v2(Resource, Bot):
-    
-    
+class Rune(Resource, Bot):
     def post(self):
-        data = Data()
-        # args = parser.parse_args()
         jsonData = request.get_json()
 
-        # print(jsonData)
-        action = jsonData['action']
-        param = action['params']
-        champName = param['champion']
-        # print(champName)
+        order = jsonData['action']['params']['sys_number_ordinal']
+        print(jsonData['contexts'])
+        idx = json.loads(order)["amount"] - 1
 
-        documents = data.findList(champName)
-        if len(documents) == 0:
-            return {"기록이없음을 알리는간단한 메시지~~ (나중에만들기)"}
-
-        docs = [self.makeMatchListItem(document) for document in documents]
-
-        output = self.makeListCard(f"{champName} 플레이 목록(최신순)", docs)
+        params = jsonData['contexts'][idx]['params']
+        items = []
+        runeName = json.loads(params['runeName']['value'])
+        runeDetail = json.loads(params['runeDetail']['value'])
+        for eName, detail in zip(runeName,runeDetail):
+            title = detail['kname']
+            description = eName
+            Domination = detail['color']
+            Electrocute = eName
+            imageUrl = f"http://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/{Domination}/{Electrocute}/{Electrocute}.png"
+            items.append(self.makeListItem(title, description, imageUrl))
+        # documents is from context
         
+        output = self.makeListCard(headerTitle = "룬 목록입니다.", items= items)
         return self.makeSkillResponse(output)
 
-
-class Champion_v1(Resource, Bot):
-    
-    
+class Item(Resource, Bot):
     def post(self):
-        data = Data()
-        # args = parser.parse_args()
         jsonData = request.get_json()
-        # print(jsonData)
-        action = jsonData['action']
-        param = action['params']
-        champName = param['champion']
-        # print(champName)
 
-        try:
-            runes = data.findOne(champName)["itemName"]
-        except:
-            print(data.findOne(champName))
-            return {}
+        order = jsonData['action']['params']['sys_number_ordinal']
+    
+        idx = json.loads(order)["amount"] - 1
 
-        items = [self.makeListItem(rune) for rune in runes]
-        output = self.makeListCard("itemlist", items)
+        params = jsonData['contexts'][idx]['params']
+        itemKey = json.loads(params['itemKey']['value'])
+
+        with open("jsonCol/item.json") as json_file:
+            json_item = json.load(json_file)
         
-        print(items)
+        items1 =[]
+        items2 =[]
+        
+        cnt = 0
+        for key in itemKey :
+            if key == None:
+                break
+            url = f"http://ddragon.leagueoflegends.com/cdn/10.25.1/img/item/{key}.png"
+            if cnt<3:
+                items1.append(self.makeListItem(json_item[key]["kname"],json_item[key]["kname"],url))
+            else:
+                items2.append(self.makeListItem(json_item[key]["kname"],json_item[key]["kname"],url))
+            cnt+=1    
+
+        
+        output1 = self.makeListCard(headerTitle="윗줄", items = items1)
+        output2 = self.makeListCard(headerTitle="아랫줄", items = items2)
+        output = output1 + output2
         return self.makeSkillResponse(output)
 
+class Skill(Resource, Bot):
+    def post(self):
+        jsonData = request.get_json()
 
-#이제 시간순서대로 나오게만하면되겟네
+        order = jsonData['action']['params']['sys_number_ordinal']
+    
+        idx = json.loads(order)["amount"] - 1
+
+        params = jsonData['contexts'][idx]['params']
+        itemKey = json.loads(params['itemKey']['value'])
+
+        with open("jsonCol/item.json") as json_file:
+            json_item = json.load(json_file)
+        
+        items1 =[]
+        items2 =[]
+        
+        cnt = 0
+        for key in itemKey :
+            url = f"http://ddragon.leagueoflegends.com/cdn/10.25.1/img/item/{key}.png"
+            if cnt<3:
+                items1.append(self.makeListItem(json_item[key]["kname"],json_item[key]["kname"],url))
+            else:
+                items2.append(self.makeListItem(json_item[key]["kname"],json_item[key]["kname"],url))
+            cnt+=1    
+
+        
+        output1 = self.makeListCard(headerTitle="윗줄 스킬", items = items1)
+        output2 = self.makeListCard(headerTitle="아랫줄 스킬", items = items2)
+        output = output1 + output2
+        return self.makeSkillResponse(output)
+#1. 룬페이지 작성법을 연구하자
+#2. 룬 목록을 현재로 ["commet"] 으로 받는데 이걸로 받으면 비효율적이지않나? - 일단 청사진을 그려보는게 좋겟네.
+
 api.add_resource(Player, '/api/player/<pro_id>')
 api.add_resource(Champion, '/api/champion/')
+api.add_resource(Rune, '/api/rune/')
+api.add_resource(Item, '/api/item/')
+api.add_resource(Skill, '/api/skill/')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=3000, debug=True)

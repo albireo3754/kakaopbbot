@@ -60,6 +60,7 @@ class DataDragon:
         with open("jsonCol/orrnItem.json") as json_file:
             json_data = json.load(json_file)
         return json_data
+
 class GetData(DataDragon):
     
     #get key by int (3) return kname like "갈리오"
@@ -87,137 +88,143 @@ class GetData(DataDragon):
     def getRuneName_v2(self, key):
         return {"kname" : self.rune[str(key)]["kname"], "color": self.rune[str(key)]["color"]}
 
-
-def make():
-    data = GetData()
-    proData = ProData()
-    for i in proData.koreanPros.index:
-        proZip = proData.koreanPros.loc[i]
-        #name = 시간빠르다앙,Kellin = nickname,Team =  Dynamics,
-        name, team, nickname = proZip["name"], proZip["team"], proZip["nickname"]
+    def getKda(self, stats):
+        (kill, deaths, assists) = (stats["kills"], stats["deaths"], stats["assists"])
+        kda = f"{kill} / {deaths} / {assists}"
+        return kda
+    def getVersion(self, json_data):
+        versions = json_data['gameVersion'].split('.')
+        version= versions[0]+'.'+versions[1]
+        return version
+class Query(GetData):
+    def __init__(self):
+        super().__init__()  
+        self.proData = ProData()
+    def make(self):
         
-        for jsonURL in os.listdir(f"match/{nickname}"):
-            with open(f"match/{nickname}/{jsonURL}") as json_file:
-                json_data = json.load(json_file)
+        for i in self.proData.koreanPros.index:
+            proZip = self.proData.koreanPros.loc[i]
+            #name = 시간빠르다앙,Kellin = nickname,Team =  Dynamics,
+            name, team, nickname = proZip["name"], proZip["team"], proZip["nickname"]
             
-            try:
-                if json_data["queueId"] != 420:
-                    continue
-            except:
-                continue
-
-            participantId = findParticipantId(json_data, name)
-            
-            if participantId == None:
-                continue
-            
-            # print(participantId)
-            #find participantId
-            try:
-                time = json_data["gameCreation"]
-                # print(participantId)
-                gameData = json_data["participants"][participantId-1]
-
+            for jsonURL in os.listdir(f"match/{nickname}"):
+                with open(f"match/{nickname}/{jsonURL}") as json_file:
+                    json_data = json.load(json_file)
                 
-                # print(gameData)
-                championEName = data.getChampionEName(gameData["championId"])
-                championKName = data.getChampionKName(gameData["championId"])
-
-                stats = gameData["stats"]
-                spellName = [data.getSpellName(gameData[f"spell{i}Id"]) for i in range(1,3)]
-                # 7th item is ward or lens
-                itemName = [data.getItemName(gameData["stats"][f"item{i}"]) for i in range(7)]
-                runeName = [data.getRuneName(gameData["stats"][f"perk{i}"]) for i in range(6)]
-                statPerk = [str(gameData["stats"][f"statPerk{i}"]) for i in range(3)]
-
-                runeDetail = [data.getRuneName_v2(gameData["stats"][f"perk{i}"]) for i in range(6)]
-
-                (kill, deaths, assists) = (stats["kills"], stats["deaths"], stats["assists"])
-                kda = f"{kill} / {deaths} / {assists}"
-
-                proCollection = pro[nickname]
-                proCollection.insert_one(
-                {"_id": str(time), 
-                "champion":{"en":championEName, "ko":championKName}, "statPerk": statPerk, 
-                "proInf": {"name" : nickname, "team": team, "summonername": name},
-                "spell":spellName, "itemName":itemName, "runeName":runeName, "kda": kda,
-                "runeDetail": runeDetail})
-
-                chamCollection = champion[championKName]
-                chamCollection.insert_one(
-                {"_id": str(time), 
-                "champion":{"en":championEName, "ko":championKName}, "statPerk": statPerk, 
-                "proInf": {"name" : nickname, "team": team, "summonername": name},
-                "spell":spellName, "itemName":itemName, "runeName":runeName, "kda": kda,
-                "runeDetail": runeDetail})
-                print(jsonURL)
-            except IndexError as e:
-                print(f"error{nickname} and {e}")
-                continue
-                # json data get error 
-            except pymongo.errors.DuplicateKeyError:
-            # skip document because it already exists in new collection
-                print(f"alread exist {nickname}")
-                continue
-            except Exception as e:
-                print(e, jsonURL)
-
-def update():
-
-    data = GetData()
-    proData = ProData()
-    for i in proData.koreanPros.index:
-        proZip = proData.koreanPros.loc[i]
-        #name = 시간빠르다앙,Kellin = nickname,Team =  Dynamics,
-        name, team, nickname = proZip["name"], proZip["team"], proZip["nickname"]
-        
-        for jsonURL in os.listdir(f"match/{nickname}"):
-            with open(f"match/{nickname}/{jsonURL}") as json_file:
-                json_data = json.load(json_file)
-
-            
-            try:
-                if json_data["queueId"] != 420:
+                try:
+                    if json_data["queueId"] != 420:
+                        continue
+                except:
                     continue
-            except:
-                continue
 
-            participantId = findParticipantId(json_data, name)
-            
-            if participantId == None:
-                continue
-            
-            # print(participantId)
-            #find participantId
-            try:
-                time = json_data["gameCreation"]
-                # print(participantId)
-                gameData = json_data["participants"][participantId-1]
-                championKName = data.getChampionKName(gameData["championId"])
-                runeDetail = [data.getRuneName_v2(gameData["stats"][f"perk{i}"]) for i in range(6)]
-                versions = json_data['gameVersion'].split('.')
-                version= versions[0]+'.'+versions[1]
-
-                proCollection = pro[nickname]
-                proCollection.update_one({},{'$set' : {"version": version}},upsert=False)
-
-                chamCollection = champion[championKName]
-                chamCollection.update_one({},{'$set' : {"version": version}},upsert=False)
+                participantId = findParticipantId(json_data, name)
                 
-                print(jsonURL)
-            except IndexError as e:
-                print(f"error{nickname} and {e}")
-                continue
-                # json data get error 
-            except pymongo.errors.DuplicateKeyError:
-            # skip document because it already exists in new collection
-                print(f"alread exist {nickname}")
-                continue
-            except Exception as e:
-                print(e, jsonURL)
+                if participantId == None:
+                    continue
+                
+                # print(participantId)
+                #find participantId
+                try:
+                    time = json_data["gameCreation"]
+                    # print(participantId)
+                    gameData = json_data["participants"][participantId-1]
+                    # print(gameData)
+                    championEName = self.getChampionEName(gameData["championId"])
+                    championKName = self.getChampionKName(gameData["championId"])
+
+                    
+                    spellName = [self.getSpellName(gameData[f"spell{i}Id"]) for i in range(1,3)]
+                    # 7th item is ward or lens
+
+                    itemName = [self.getItemName(gameData["stats"][f"item{i}"]) for i in range(7)]
+                    runeName = [self.getRuneName(gameData["stats"][f"perk{i}"]) for i in range(6)]
+                    statPerk = [str(gameData["stats"][f"statPerk{i}"]) for i in range(3)]
+                    runeDetail = [self.getRuneName_v2(gameData["stats"][f"perk{i}"]) for i in range(6)]
+                    kda = self.getKda(gameData["stats"])
+                    version = self.getVersion(json_data)
+                    
+
+                    # proCollection = pro[nickname]
+                    # proCollection.insert_one(
+                    # {"_id": str(time), 
+                    # "champion":{"en":championEName, "ko":championKName}, "statPerk": statPerk, 
+                    # "proInf": {"name" : nickname, "team": team, "summonername": name},
+                    # "spell":spellName, "itemName":itemName, "runeName":runeName, "kda": kda,
+                    # "runeDetail": runeDetail, "version": version})
+
+                    chamCollection = champion[championKName]
+                    chamCollection.insert_one(
+                    {"_id": str(time), 
+                    "champion":{"en":championEName, "ko":championKName}, "statPerk": statPerk, 
+                    "proInf": {"name" : nickname, "team": team, "summonername": name},
+                    "spell":spellName, "itemName":itemName, "runeName":runeName, "kda": kda,
+                    "runeDetail": runeDetail, "version": version})
+                    print(jsonURL)
+                except IndexError as e:
+                    print(f"error{nickname} and {e}")
+                    continue
+                    # json self get error 
+                except pymongo.errors.DuplicateKeyError:
+                # skip document because it already exists in new collection
+                    print(f"alread exist {nickname}")
+                    continue
+                except Exception as e:
+                    print(e, jsonURL)
+
+    def update(self):
+
+        self = GetData()
+        self.proData = ProData()
+        for i in self.proData.koreanPros.index:
+            proZip = self.proData.koreanPros.loc[i]
+            #name = 시간빠르다앙,Kellin = nickname,Team =  Dynamics,
+            name, team, nickname = proZip["name"], proZip["team"], proZip["nickname"]
+            
+            for jsonURL in os.listdir(f"match/{nickname}"):
+                with open(f"match/{nickname}/{jsonURL}") as json_file:
+                    json_data = json.load(json_file)
+
+                try:
+                    if json_data["queueId"] != 420:
+                        continue
+                except:
+                    continue
+
+                participantId = findParticipantId(json_data, name)
+                
+                if participantId == None:
+                    continue
+                
+                # print(participantId)
+                #find participantId
+                try:
+                    # print(participantId)
+                    gameData = json_data["participants"][participantId-1]
+                    # print(gameData)
+                    championKName = self.getChampionKName(gameData["championId"])
+                    kda = self.getKda(gameData["stats"])
+                    version = self.getVersion(json_data)
+                    proCollection = pro[nickname]
+                    proCollection.update_one({},{'$set' : {"kda":kda}},upsert=False)
+
+                    chamCollection = champion[championKName]
+                    chamCollection.update_one({},{'$set' : {"kda":kda}},upsert=False)
+                    
+                    print(jsonURL)
+                except IndexError as e:
+                    print(f"error{nickname} and {e}")
+                    continue
+                    # json self get error 
+                except pymongo.errors.DuplicateKeyError:
+                # skip document because it already exists in new collection
+                    print(f"alread exist {nickname}")
+                    continue
+                except Exception as e:
+                    print(e, jsonURL)
 
 if __name__ == "__main__":
-    update()
+    query = Query()
+    query.make()
     # make()
 # 모든데이터를 한글화하는데 성공했음 이제 어떻게할까?
 

@@ -2,6 +2,7 @@ match/
 ConstURL.py
 mongod/
 journal/
+timeline/
 mongod/_mdb_catalog.wt
 mongod/collection-0--3417244057555104681.wt
 mongod/collection-2--3417244057555104681.wt
