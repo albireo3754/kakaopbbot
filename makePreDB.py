@@ -22,8 +22,8 @@ def findParticipantId(json_data,summonerName):
     for pI in json_data["participantIdentities"]:
         # print(kPro)
         if summonerName == pI["player"]["summonerName"]:
-    
-            return pI["participantId"] 
+            
+            return pI.get("participantId")
 class ProData:
     def __init__(self):
         self.prodata = pd.read_csv('nickplusID.csv',index_col= 0 ,header=0)
@@ -61,19 +61,28 @@ class DataDragon:
             json_data = json.load(json_file)
         return json_data
 
+    def getMatchJson(self,url):
+        with open(url) as json_file:
+            time_data = json.load(json_file)
+        return time_data
+    def getTimelineJson(self,url):
+        with open(url) as json_file:
+            json_data = json.load(json_file)
+        return json_data
+
 class GetData(DataDragon):
     
     #get key by int (3) return kname like "갈리오"
-    def getChampionEName(self, key):
+    def makeChampionEName(self, key):
         return self.champion[str(key)]["ename"]
 
-    def getChampionKName(self, key):
+    def makeChampionKName(self, key):
         return self.champion[str(key)]["kname"]
 
-    def getSpellName(self, key):
+    def makeSpellName(self, key):
         return self.spell[str(key)]["ename"]
 
-    def getItemName(self, key):
+    def makeItemName(self, key):
         if key == 0:
             return None
         if key >= 7000:
@@ -82,20 +91,37 @@ class GetData(DataDragon):
         else:
             return str(key)
 
-    def getRuneName(self, key):
+    def makeRuneName(self, key):
         return self.rune[str(key)]["ename"]
 
-    def getRuneName_v2(self, key):
-        return {"kname" : self.rune[str(key)]["kname"], "color": self.rune[str(key)]["color"]}
+    def makeRuneName_v2(self, key):
+        return {
+            "kname" : self.rune[str(key)]["kname"], 
+            "color": self.rune[str(key)]["color"],
+            "iconUrl": self.rune[str(key)]["iconUrl"]}
 
-    def getKda(self, stats):
+    def makeKda(self, stats):
         (kill, deaths, assists) = (stats["kills"], stats["deaths"], stats["assists"])
         kda = f"{kill} / {deaths} / {assists}"
         return kda
-    def getVersion(self, json_data):
+    
+    def makeVersion(self, json_data):
         versions = json_data['gameVersion'].split('.')
         version= versions[0]+'.'+versions[1]
         return version
+    
+    def makeSkillTimeline(self, json_data, Id):
+        eventsList = json_data['frames'][1:]
+        skillslot = []
+        for events in eventsList:
+            for event in events['events']:
+                # type : ITEM_PURCHASED, ITEM_SOLD, ITEM_UNDO, SKILL_LEVEL_UP
+                if event.get('participantId') != Id:
+                    continue
+                if event.get('type') == 'SKILL_LEVEL_UP':
+                    skillslot.append(event.get('skillSlot'))
+
+        return skillslot
 class Query(GetData):
     def __init__(self):
         super().__init__()  
@@ -108,15 +134,19 @@ class Query(GetData):
             name, team, nickname = proZip["name"], proZip["team"], proZip["nickname"]
             
             for jsonURL in os.listdir(f"match/{nickname}"):
-                with open(f"match/{nickname}/{jsonURL}") as json_file:
-                    json_data = json.load(json_file)
-                
+                print(jsonURL,"is")
                 try:
-                    if json_data["queueId"] != 420:
-                        continue
+                    json_data = self.getMatchJson(f"match/{nickname}/{jsonURL}")
+                    time_data = self.getTimelineJson(f"timeline/{nickname}/{jsonURL}")
                 except:
+                    print(f"match/{nickname}/{jsonURL}")
+                    print(f"timeline/{nickname}/{jsonURL}")
                     continue
-
+                
+                
+                if json_data.get("queueId") != 420:
+                    continue
+            
                 participantId = findParticipantId(json_data, name)
                 
                 if participantId == None:
@@ -127,23 +157,23 @@ class Query(GetData):
                 try:
                     time = json_data["gameCreation"]
                     # print(participantId)
-                    gameData = json_data["participants"][participantId-1]
+                    gameData = json_data["participants"][participantId]
                     # print(gameData)
-                    championEName = self.getChampionEName(gameData["championId"])
-                    championKName = self.getChampionKName(gameData["championId"])
+                    championEName = self.makeChampionEName(gameData["championId"])
+                    championKName = self.makeChampionKName(gameData["championId"])
 
                     
-                    spellName = [self.getSpellName(gameData[f"spell{i}Id"]) for i in range(1,3)]
+                    spellName = [self.makeSpellName(gameData[f"spell{i}Id"]) for i in range(1,3)]
                     # 7th item is ward or lens
 
-                    itemName = [self.getItemName(gameData["stats"][f"item{i}"]) for i in range(7)]
-                    runeName = [self.getRuneName(gameData["stats"][f"perk{i}"]) for i in range(6)]
+                    itemName = [self.makeItemName(gameData["stats"][f"item{i}"]) for i in range(7)]
+                    runeName = [self.makeRuneName(gameData["stats"][f"perk{i}"]) for i in range(6)]
                     statPerk = [str(gameData["stats"][f"statPerk{i}"]) for i in range(3)]
-                    runeDetail = [self.getRuneName_v2(gameData["stats"][f"perk{i}"]) for i in range(6)]
-                    kda = self.getKda(gameData["stats"])
-                    version = self.getVersion(json_data)
+                    runeDetail = [self.makeRuneName_v2(gameData["stats"][f"perk{i}"]) for i in range(6)]
+                    kda = self.makeKda(gameData["stats"])
+                    version = self.makeVersion(json_data)
                     
-
+                    skill = self.makeSkillTimeline(time_data,participantId)
                     # proCollection = pro[nickname]
                     # proCollection.insert_one(
                     # {"_id": str(time), 
@@ -151,14 +181,14 @@ class Query(GetData):
                     # "proInf": {"name" : nickname, "team": team, "summonername": name},
                     # "spell":spellName, "itemName":itemName, "runeName":runeName, "kda": kda,
                     # "runeDetail": runeDetail, "version": version})
-
+                    print(skill)
                     chamCollection = champion[championKName]
                     chamCollection.insert_one(
                     {"_id": str(time), 
                     "champion":{"en":championEName, "ko":championKName}, "statPerk": statPerk, 
                     "proInf": {"name" : nickname, "team": team, "summonername": name},
                     "spell":spellName, "itemName":itemName, "runeName":runeName, "kda": kda,
-                    "runeDetail": runeDetail, "version": version})
+                    "runeDetail": runeDetail, "version": version, "skill": skill})
                     print(jsonURL)
                 except IndexError as e:
                     print(f"error{nickname} and {e}")
@@ -201,9 +231,10 @@ class Query(GetData):
                     # print(participantId)
                     gameData = json_data["participants"][participantId-1]
                     # print(gameData)
-                    championKName = self.getChampionKName(gameData["championId"])
-                    kda = self.getKda(gameData["stats"])
-                    version = self.getVersion(json_data)
+                    championKName = self.makeChampionKName(gameData["championId"])
+                    
+                    kda = self.makeKda(gameData["stats"])
+                    version = self.makeVersion(json_data)
                     proCollection = pro[nickname]
                     proCollection.update_one({},{'$set' : {"kda":kda}},upsert=False)
 

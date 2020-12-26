@@ -103,7 +103,6 @@ class Bot:
         proInf = doc['proInf']
         Domination = doc['runeDetail'][0]['color']
         Electrocute = doc['runeName'][0]
-        print(doc)
         version = doc['version']
 
         title = f"{proInf['name']}({proInf['summonername']})"
@@ -151,6 +150,41 @@ class Bot:
         itemButton = self.makeButton(label="최종아이템 보러가기",action="message",messageText=f"{idx}번 선수의 아이템")
         skillButton = self.makeButton(label="스킬트리 보러가기",action="message",messageText=f"{idx}번 선수의 스킬트리")
         return [runeButton,itemButton,skillButton]
+    def makeSkillText(self, keys):
+        timeLineText = ''
+        
+        for idx, val in enumerate(keys):
+            skill = ''
+            if val == 1:
+                skill = 'Q'
+            elif val == 2:
+                skill = 'W'
+            elif val == 3:
+                skill = 'E'
+            elif val == 4:
+                skill = 'R'
+            
+            timeLineText += f'{idx+1}레벨{skill} -> '
+        return timeLineText
+    def makeStatText(self, keys):
+        statText = ''
+
+        for key in keys:
+            if key == "5001":
+                stat = '체력'
+            elif key == "5002":
+                stat = '물방'
+            elif key == "5003":
+                stat = '마저'
+            elif key == "5005":
+                stat = '공속'
+            elif key == "5007":
+                stat = '주문가속'
+            elif key == "5008":
+                stat = '적응형'
+            statText += f'{stat} / ' 
+
+        return statText
 class Player(Resource):
     def __init__(self):
         pass
@@ -163,7 +197,6 @@ class Champion(Resource, Bot):
         jsonData = request.get_json()
         # print(jsonData)
         action = jsonData['action']
-        print(jsonData['contexts'])
         params = action['params']
         champName = params['champion']
         # print(champName)
@@ -178,7 +211,11 @@ class Champion(Resource, Bot):
         for idx,doc in enumerate(documents):
             basicCards.append(self.makeIntroCard(doc, self.makeRISButtons(idx+1), self.makeBasicCard))
             contexts.append(self.makeContext(f"select_champion_{idx+1}", 
-            {"runeName": doc['runeName'], "runeDetail": doc['runeDetail'],"itemKey": doc["itemName"]}))
+            {"runeName": doc['runeName'], 
+            "runeDetail": doc['runeDetail'],
+            "itemKey": doc['itemName'],
+            "skill": doc['skill'],
+            "statPerk": doc['statPerk']}))
         
         output = self.makeCarousel(basicCards)
         return self.makeSkillResponse(output, contexts)
@@ -188,23 +225,37 @@ class Rune(Resource, Bot):
         jsonData = request.get_json()
 
         order = jsonData['action']['params']['sys_number_ordinal']
-        print(jsonData['contexts'])
         idx = json.loads(order)["amount"] - 1
 
         params = jsonData['contexts'][idx]['params']
-        items = []
+        
         runeName = json.loads(params['runeName']['value'])
         runeDetail = json.loads(params['runeDetail']['value'])
-        for eName, detail in zip(runeName,runeDetail):
+        statPerk = json.loads(params['statPerk']['value'])
+        itemsMain = []
+        for eName, detail in zip(runeName[:4],runeDetail[:4]):
             title = detail['kname']
             description = eName
-            Domination = detail['color']
-            Electrocute = eName
-            imageUrl = f"http://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/{Domination}/{Electrocute}/{Electrocute}.png"
-            items.append(self.makeListItem(title, description, imageUrl))
+            iconUrl = detail['iconUrl']
+
+            imageUrl = f"http://ddragon.leagueoflegends.com/cdn/img/{iconUrl}"
+            itemsMain.append(self.makeListItem(title, description, imageUrl))
+        itemsSub = []
+        for eName, detail in zip(runeName[4:],runeDetail[4:]):
+            title = detail['kname']
+            description = eName
+            iconUrl = detail['iconUrl']
+
+            imageUrl = f"http://ddragon.leagueoflegends.com/cdn/img/{iconUrl}"
+            itemsSub.append(self.makeListItem(title, description, imageUrl))
+        
         # documents is from context
         
-        output = self.makeListCard(headerTitle = "룬 목록입니다.", items= items)
+        outputMain = self.makeListCard(headerTitle = "메인룬 목록입니다.", items= itemsMain)
+        outputSub = self.makeListCard(headerTitle = "서브룬입니다.", items= itemsSub)
+        statText = self.makeStatText(statPerk)
+        outputStat = self.makeSimpleText(statText)
+        output = outputMain + outputSub + [outputStat]
         return self.makeSkillResponse(output)
 
 class Item(Resource, Bot):
@@ -238,6 +289,7 @@ class Item(Resource, Bot):
         
         output1 = self.makeListCard(headerTitle="윗줄", items = items1)
         output2 = self.makeListCard(headerTitle="아랫줄", items = items2)
+    
         output = output1 + output2
         return self.makeSkillResponse(output)
 
@@ -250,27 +302,11 @@ class Skill(Resource, Bot):
         idx = json.loads(order)["amount"] - 1
 
         params = jsonData['contexts'][idx]['params']
-        itemKey = json.loads(params['itemKey']['value'])
+        skillKey = json.loads(params['skill']['value'])
 
-        with open("jsonCol/item.json") as json_file:
-            json_item = json.load(json_file)
+        skillText = self.makeSkillText(skillKey)
         
-        items1 =[]
-        items2 =[]
-        
-        cnt = 0
-        for key in itemKey :
-            url = f"http://ddragon.leagueoflegends.com/cdn/10.25.1/img/item/{key}.png"
-            if cnt<3:
-                items1.append(self.makeListItem(json_item[key]["kname"],json_item[key]["kname"],url))
-            else:
-                items2.append(self.makeListItem(json_item[key]["kname"],json_item[key]["kname"],url))
-            cnt+=1    
-
-        
-        output1 = self.makeListCard(headerTitle="윗줄 스킬", items = items1)
-        output2 = self.makeListCard(headerTitle="아랫줄 스킬", items = items2)
-        output = output1 + output2
+        output = self.makeSimpleText(skillText)
         return self.makeSkillResponse(output)
 #1. 룬페이지 작성법을 연구하자
 #2. 룬 목록을 현재로 ["commet"] 으로 받는데 이걸로 받으면 비효율적이지않나? - 일단 청사진을 그려보는게 좋겟네.

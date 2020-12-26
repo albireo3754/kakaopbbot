@@ -20,8 +20,10 @@ for i in data:
             runekey = k["id"]
             runeEname = k["key"]
             runeKname = k["name"]       
-            print(runeKname)
-            runeDict[runekey] = {"ename":runeEname, "kname":runeKname, "color": runeColor}
+            iconUrl = k["icon"]
+            runeDict[runekey] = {
+                "ename":runeEname, "iconUrl": iconUrl,
+                "kname":runeKname, "color": runeColor}
 with open("jsonCol/rune.json", "w") as outfile:  
     json.dump(runeDict, outfile)
 
