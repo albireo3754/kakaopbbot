@@ -6,6 +6,7 @@ from datetime import datetime
 app = Flask(__name__)
 api = Api(app)
 import pymongo
+from flask_cors import CORS
 
 # parser = reqparse.RequestParser()
 # parser.add_argument('action', action='append')
@@ -195,6 +196,12 @@ class Champion(Resource, Bot):
         data = Data()
         # args = parser.parse_args()
         jsonData = request.get_json()
+        print(request.content_type)
+        print(request.is_json)
+        file_path = "./sample.json"
+        return
+        with open(file_path, 'w') as outfile:
+            json.dump(jsonData, outfile, indent=2)
         # print(jsonData)
         action = jsonData['action']
         params = action['params']
@@ -223,6 +230,9 @@ class Champion(Resource, Bot):
 class Rune(Resource, Bot):
     def post(self):
         jsonData = request.get_json()
+        file_path = "./Rune.json"
+        with open(file_path, 'w') as outfile:
+            json.dump(jsonData, outfile, indent=2)
 
         order = jsonData['action']['params']['sys_number_ordinal']
         idx = json.loads(order)["amount"] - 1
@@ -261,7 +271,9 @@ class Rune(Resource, Bot):
 class Item(Resource, Bot):
     def post(self):
         jsonData = request.get_json()
-
+        file_path = "./Item.json"
+        with open(file_path, 'w') as outfile:
+            json.dump(jsonData, outfile, indent=2)
         order = jsonData['action']['params']['sys_number_ordinal']
     
         idx = json.loads(order)["amount"] - 1
@@ -296,7 +308,9 @@ class Item(Resource, Bot):
 class Skill(Resource, Bot):
     def post(self):
         jsonData = request.get_json()
-
+        file_path = "./Skill.json"
+        with open(file_path, 'w') as outfile:
+            json.dump(jsonData, outfile, indent=2)
         order = jsonData['action']['params']['sys_number_ordinal']
     
         idx = json.loads(order)["amount"] - 1

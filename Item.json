@@ -1,0 +1,217 @@
+{
+  "bot": {
+    "id": "5fca219cda24a23ad1d67f73",
+    "name": "\uce74\uce74\uc624\ud504\ub85c\ube4c\ub354\ubd07"
+  },
+  "intent": {
+    "id": "5fe5c224064f244294965320",
+    "name": "item",
+    "extra": {
+      "reason": {
+        "code": 1,
+        "message": "OK"
+      }
+    }
+  },
+  "action": {
+    "id": "5fe5c1ce9b88050e209073a9",
+    "name": "get_item",
+    "params": {
+      "sys_number_ordinal": "{\"amount\": 1}",
+      "showItem": "\uc544\uc774\ud15c"
+    },
+    "detailParams": {
+      "sys_number_ordinal": {
+        "groupName": "",
+        "origin": "1\ubc88",
+        "value": "{\"amount\": 1}"
+      },
+      "showItem": {
+        "groupName": "",
+        "origin": "\uc544\uc774\ud15c",
+        "value": "\uc544\uc774\ud15c"
+      }
+    },
+    "clientExtra": {}
+  },
+  "userRequest": {
+    "block": {
+      "id": "5fe5c224064f244294965320",
+      "name": "item"
+    },
+    "user": {
+      "id": "022ae39fd7985a1ad1509c6a2771022bc5ea04c05e8dba0c8ba3fd3c7775392c72",
+      "type": "botUserKey",
+      "properties": {
+        "botUserKey": "022ae39fd7985a1ad1509c6a2771022bc5ea04c05e8dba0c8ba3fd3c7775392c72",
+        "isFriend": true,
+        "plusfriendUserKey": "RT-vr7mx9Vxs",
+        "bot_user_key": "022ae39fd7985a1ad1509c6a2771022bc5ea04c05e8dba0c8ba3fd3c7775392c72",
+        "plusfriend_user_key": "RT-vr7mx9Vxs"
+      }
+    },
+    "utterance": "1\ubc88 \uc120\uc218\uc758 \uc544\uc774\ud15c",
+    "params": {
+      "surface": "Kakaotalk.plusfriend"
+    },
+    "lang": "ko",
+    "timezone": "Asia/Seoul"
+  },
+  "contexts": [
+    {
+      "name": "select_champion_1",
+      "lifespan": 4,
+      "ttl": 600,
+      "params": {
+        "runeName": {
+          "value": "[\"FleetFootwork\",\"PresenceOfMind\",\"LegendTenacity\",\"CoupDeGrace\",\"TasteOfBlood\",\"RavenousHunter\"]",
+          "resolvedValue": "[\"FleetFootwork\",\"PresenceOfMind\",\"LegendTenacity\",\"CoupDeGrace\",\"TasteOfBlood\",\"RavenousHunter\"]"
+        },
+        "itemKey": {
+          "value": "[\"2420\",\"3152\",\"3020\",\"1056\",\"3165\",\"3100\",\"3364\"]",
+          "resolvedValue": "[\"2420\",\"3152\",\"3020\",\"1056\",\"3165\",\"3100\",\"3364\"]"
+        },
+        "statPerk": {
+          "value": "[\"5008\",\"5008\",\"5003\"]",
+          "resolvedValue": "[\"5008\",\"5008\",\"5003\"]"
+        },
+        "runeDetail": {
+          "value": "[{\"kname\":\"\uae30\ubbfc\ud55c \ubc1c\ub180\ub9bc\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/FleetFootwork/FleetFootwork.png\"},{\"kname\":\"\uce68\ucc29\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png\"},{\"kname\":\"\uc804\uc124: \uac15\uc778\ud568\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/LegendTenacity/LegendTenacity.png\"},{\"kname\":\"\ucd5c\ud6c4\uc758 \uc77c\uaca9\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/CoupDeGrace/CoupDeGrace.png\"},{\"kname\":\"\ud53c\uc758 \ub9db\",\"color\":\"Domination\",\"iconUrl\":\"perk-images/Styles/Domination/TasteOfBlood/GreenTerror_TasteOfBlood.png\"},{\"kname\":\"\uad76\uc8fc\ub9b0 \uc0ac\ub0e5\uafbc\",\"color\":\"Domination\",\"iconUrl\":\"perk-images/Styles/Domination/RavenousHunter/RavenousHunter.png\"}]",
+          "resolvedValue": "[{\"kname\":\"\uae30\ubbfc\ud55c \ubc1c\ub180\ub9bc\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/FleetFootwork/FleetFootwork.png\"},{\"kname\":\"\uce68\ucc29\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png\"},{\"kname\":\"\uc804\uc124: \uac15\uc778\ud568\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/LegendTenacity/LegendTenacity.png\"},{\"kname\":\"\ucd5c\ud6c4\uc758 \uc77c\uaca9\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/CoupDeGrace/CoupDeGrace.png\"},{\"kname\":\"\ud53c\uc758 \ub9db\",\"color\":\"Domination\",\"iconUrl\":\"perk-images/Styles/Domination/TasteOfBlood/GreenTerror_TasteOfBlood.png\"},{\"kname\":\"\uad76\uc8fc\ub9b0 \uc0ac\ub0e5\uafbc\",\"color\":\"Domination\",\"iconUrl\":\"perk-images/Styles/Domination/RavenousHunter/RavenousHunter.png\"}]"
+        },
+        "champion": {
+          "value": "\uc544\uce7c\ub9ac",
+          "resolvedValue": "\uc544\uce7c\ub9ac"
+        },
+        "skill": {
+          "value": "[2,3,1,2,2,3,4,2,2,3,4,3,3,1]",
+          "resolvedValue": "[2,3,1,2,2,3,4,2,2,3,4,3,3,1]"
+        }
+      }
+    },
+    {
+      "name": "select_champion_2",
+      "lifespan": 4,
+      "ttl": 600,
+      "params": {
+        "runeName": {
+          "value": "[\"FleetFootwork\",\"PresenceOfMind\",\"LegendTenacity\",\"CoupDeGrace\",\"TasteOfBlood\",\"RavenousHunter\"]",
+          "resolvedValue": "[\"FleetFootwork\",\"PresenceOfMind\",\"LegendTenacity\",\"CoupDeGrace\",\"TasteOfBlood\",\"RavenousHunter\"]"
+        },
+        "itemKey": {
+          "value": "[\"4633\",\"4637\",\"3916\",\"1026\",\"1054\",\"3111\",\"3340\"]",
+          "resolvedValue": "[\"4633\",\"4637\",\"3916\",\"1026\",\"1054\",\"3111\",\"3340\"]"
+        },
+        "statPerk": {
+          "value": "[\"5008\",\"5008\",\"5003\"]",
+          "resolvedValue": "[\"5008\",\"5008\",\"5003\"]"
+        },
+        "runeDetail": {
+          "value": "[{\"kname\":\"\uae30\ubbfc\ud55c \ubc1c\ub180\ub9bc\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/FleetFootwork/FleetFootwork.png\"},{\"kname\":\"\uce68\ucc29\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png\"},{\"kname\":\"\uc804\uc124: \uac15\uc778\ud568\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/LegendTenacity/LegendTenacity.png\"},{\"kname\":\"\ucd5c\ud6c4\uc758 \uc77c\uaca9\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/CoupDeGrace/CoupDeGrace.png\"},{\"kname\":\"\ud53c\uc758 \ub9db\",\"color\":\"Domination\",\"iconUrl\":\"perk-images/Styles/Domination/TasteOfBlood/GreenTerror_TasteOfBlood.png\"},{\"kname\":\"\uad76\uc8fc\ub9b0 \uc0ac\ub0e5\uafbc\",\"color\":\"Domination\",\"iconUrl\":\"perk-images/Styles/Domination/RavenousHunter/RavenousHunter.png\"}]",
+          "resolvedValue": "[{\"kname\":\"\uae30\ubbfc\ud55c \ubc1c\ub180\ub9bc\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/FleetFootwork/FleetFootwork.png\"},{\"kname\":\"\uce68\ucc29\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png\"},{\"kname\":\"\uc804\uc124: \uac15\uc778\ud568\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/LegendTenacity/LegendTenacity.png\"},{\"kname\":\"\ucd5c\ud6c4\uc758 \uc77c\uaca9\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/CoupDeGrace/CoupDeGrace.png\"},{\"kname\":\"\ud53c\uc758 \ub9db\",\"color\":\"Domination\",\"iconUrl\":\"perk-images/Styles/Domination/TasteOfBlood/GreenTerror_TasteOfBlood.png\"},{\"kname\":\"\uad76\uc8fc\ub9b0 \uc0ac\ub0e5\uafbc\",\"color\":\"Domination\",\"iconUrl\":\"perk-images/Styles/Domination/RavenousHunter/RavenousHunter.png\"}]"
+        },
+        "champion": {
+          "value": "\uc544\uce7c\ub9ac",
+          "resolvedValue": "\uc544\uce7c\ub9ac"
+        },
+        "skill": {
+          "value": "[1,3,1,2,1,4,1,3,1,3,4,3,3,2,2,4]",
+          "resolvedValue": "[1,3,1,2,1,4,1,3,1,3,4,3,3,2,2,4]"
+        }
+      }
+    },
+    {
+      "name": "select_champion_3",
+      "lifespan": 4,
+      "ttl": 600,
+      "params": {
+        "runeName": {
+          "value": "[\"FleetFootwork\",\"PresenceOfMind\",\"LegendTenacity\",\"LastStand\",\"SecondWind\",\"Overgrowth\"]",
+          "resolvedValue": "[\"FleetFootwork\",\"PresenceOfMind\",\"LegendTenacity\",\"LastStand\",\"SecondWind\",\"Overgrowth\"]"
+        },
+        "itemKey": {
+          "value": "[\"1056\",\"4633\",\"1082\",\"1052\",\"3020\",\"1026\",\"3340\"]",
+          "resolvedValue": "[\"1056\",\"4633\",\"1082\",\"1052\",\"3020\",\"1026\",\"3340\"]"
+        },
+        "statPerk": {
+          "value": "[\"5008\",\"5008\",\"5003\"]",
+          "resolvedValue": "[\"5008\",\"5008\",\"5003\"]"
+        },
+        "runeDetail": {
+          "value": "[{\"kname\":\"\uae30\ubbfc\ud55c \ubc1c\ub180\ub9bc\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/FleetFootwork/FleetFootwork.png\"},{\"kname\":\"\uce68\ucc29\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png\"},{\"kname\":\"\uc804\uc124: \uac15\uc778\ud568\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/LegendTenacity/LegendTenacity.png\"},{\"kname\":\"\ucd5c\ud6c4\uc758 \uc800\ud56d\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Sorcery/LastStand/LastStand.png\"},{\"kname\":\"\uc7ac\uc0dd\uc758 \ubc14\ub78c\",\"color\":\"Resolve\",\"iconUrl\":\"perk-images/Styles/Resolve/SecondWind/SecondWind.png\"},{\"kname\":\"\uacfc\uc789\uc131\uc7a5\",\"color\":\"Resolve\",\"iconUrl\":\"perk-images/Styles/Resolve/Overgrowth/Overgrowth.png\"}]",
+          "resolvedValue": "[{\"kname\":\"\uae30\ubbfc\ud55c \ubc1c\ub180\ub9bc\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/FleetFootwork/FleetFootwork.png\"},{\"kname\":\"\uce68\ucc29\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png\"},{\"kname\":\"\uc804\uc124: \uac15\uc778\ud568\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/LegendTenacity/LegendTenacity.png\"},{\"kname\":\"\ucd5c\ud6c4\uc758 \uc800\ud56d\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Sorcery/LastStand/LastStand.png\"},{\"kname\":\"\uc7ac\uc0dd\uc758 \ubc14\ub78c\",\"color\":\"Resolve\",\"iconUrl\":\"perk-images/Styles/Resolve/SecondWind/SecondWind.png\"},{\"kname\":\"\uacfc\uc789\uc131\uc7a5\",\"color\":\"Resolve\",\"iconUrl\":\"perk-images/Styles/Resolve/Overgrowth/Overgrowth.png\"}]"
+        },
+        "champion": {
+          "value": "\uc544\uce7c\ub9ac",
+          "resolvedValue": "\uc544\uce7c\ub9ac"
+        },
+        "skill": {
+          "value": "[1,3,2,1,1,4,1,2,1,2,4]",
+          "resolvedValue": "[1,3,2,1,1,4,1,2,1,2,4]"
+        }
+      }
+    },
+    {
+      "name": "select_champion_4",
+      "lifespan": 4,
+      "ttl": 600,
+      "params": {
+        "runeName": {
+          "value": "[\"FleetFootwork\",\"PresenceOfMind\",\"LegendTenacity\",\"LastStand\",\"TasteOfBlood\",\"RavenousHunter\"]",
+          "resolvedValue": "[\"FleetFootwork\",\"PresenceOfMind\",\"LegendTenacity\",\"LastStand\",\"TasteOfBlood\",\"RavenousHunter\"]"
+        },
+        "itemKey": {
+          "value": "[\"2420\",\"3152\",\"3135\",\"1082\",\"3100\",\"3111\",\"3340\"]",
+          "resolvedValue": "[\"2420\",\"3152\",\"3135\",\"1082\",\"3100\",\"3111\",\"3340\"]"
+        },
+        "statPerk": {
+          "value": "[\"5008\",\"5008\",\"5002\"]",
+          "resolvedValue": "[\"5008\",\"5008\",\"5002\"]"
+        },
+        "runeDetail": {
+          "value": "[{\"kname\":\"\uae30\ubbfc\ud55c \ubc1c\ub180\ub9bc\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/FleetFootwork/FleetFootwork.png\"},{\"kname\":\"\uce68\ucc29\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png\"},{\"kname\":\"\uc804\uc124: \uac15\uc778\ud568\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/LegendTenacity/LegendTenacity.png\"},{\"kname\":\"\ucd5c\ud6c4\uc758 \uc800\ud56d\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Sorcery/LastStand/LastStand.png\"},{\"kname\":\"\ud53c\uc758 \ub9db\",\"color\":\"Domination\",\"iconUrl\":\"perk-images/Styles/Domination/TasteOfBlood/GreenTerror_TasteOfBlood.png\"},{\"kname\":\"\uad76\uc8fc\ub9b0 \uc0ac\ub0e5\uafbc\",\"color\":\"Domination\",\"iconUrl\":\"perk-images/Styles/Domination/RavenousHunter/RavenousHunter.png\"}]",
+          "resolvedValue": "[{\"kname\":\"\uae30\ubbfc\ud55c \ubc1c\ub180\ub9bc\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/FleetFootwork/FleetFootwork.png\"},{\"kname\":\"\uce68\ucc29\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png\"},{\"kname\":\"\uc804\uc124: \uac15\uc778\ud568\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/LegendTenacity/LegendTenacity.png\"},{\"kname\":\"\ucd5c\ud6c4\uc758 \uc800\ud56d\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Sorcery/LastStand/LastStand.png\"},{\"kname\":\"\ud53c\uc758 \ub9db\",\"color\":\"Domination\",\"iconUrl\":\"perk-images/Styles/Domination/TasteOfBlood/GreenTerror_TasteOfBlood.png\"},{\"kname\":\"\uad76\uc8fc\ub9b0 \uc0ac\ub0e5\uafbc\",\"color\":\"Domination\",\"iconUrl\":\"perk-images/Styles/Domination/RavenousHunter/RavenousHunter.png\"}]"
+        },
+        "champion": {
+          "value": "\uc544\uce7c\ub9ac",
+          "resolvedValue": "\uc544\uce7c\ub9ac"
+        },
+        "skill": {
+          "value": "[2,1,3,1,1,4,1,2,1,2,4,2]",
+          "resolvedValue": "[2,1,3,1,1,4,1,2,1,2,4,2]"
+        }
+      }
+    },
+    {
+      "name": "select_champion_5",
+      "lifespan": 4,
+      "ttl": 600,
+      "params": {
+        "runeName": {
+          "value": "[\"FleetFootwork\",\"PresenceOfMind\",\"LegendTenacity\",\"CoupDeGrace\",\"TasteOfBlood\",\"RavenousHunter\"]",
+          "resolvedValue": "[\"FleetFootwork\",\"PresenceOfMind\",\"LegendTenacity\",\"CoupDeGrace\",\"TasteOfBlood\",\"RavenousHunter\"]"
+        },
+        "itemKey": {
+          "value": "[\"1056\",\"3100\",\"2055\",\"3152\",\"3020\",\"1052\",\"3340\"]",
+          "resolvedValue": "[\"1056\",\"3100\",\"2055\",\"3152\",\"3020\",\"1052\",\"3340\"]"
+        },
+        "statPerk": {
+          "value": "[\"5008\",\"5008\",\"5002\"]",
+          "resolvedValue": "[\"5008\",\"5008\",\"5002\"]"
+        },
+        "runeDetail": {
+          "value": "[{\"kname\":\"\uae30\ubbfc\ud55c \ubc1c\ub180\ub9bc\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/FleetFootwork/FleetFootwork.png\"},{\"kname\":\"\uce68\ucc29\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png\"},{\"kname\":\"\uc804\uc124: \uac15\uc778\ud568\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/LegendTenacity/LegendTenacity.png\"},{\"kname\":\"\ucd5c\ud6c4\uc758 \uc77c\uaca9\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/CoupDeGrace/CoupDeGrace.png\"},{\"kname\":\"\ud53c\uc758 \ub9db\",\"color\":\"Domination\",\"iconUrl\":\"perk-images/Styles/Domination/TasteOfBlood/GreenTerror_TasteOfBlood.png\"},{\"kname\":\"\uad76\uc8fc\ub9b0 \uc0ac\ub0e5\uafbc\",\"color\":\"Domination\",\"iconUrl\":\"perk-images/Styles/Domination/RavenousHunter/RavenousHunter.png\"}]",
+          "resolvedValue": "[{\"kname\":\"\uae30\ubbfc\ud55c \ubc1c\ub180\ub9bc\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/FleetFootwork/FleetFootwork.png\"},{\"kname\":\"\uce68\ucc29\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png\"},{\"kname\":\"\uc804\uc124: \uac15\uc778\ud568\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/LegendTenacity/LegendTenacity.png\"},{\"kname\":\"\ucd5c\ud6c4\uc758 \uc77c\uaca9\",\"color\":\"Precision\",\"iconUrl\":\"perk-images/Styles/Precision/CoupDeGrace/CoupDeGrace.png\"},{\"kname\":\"\ud53c\uc758 \ub9db\",\"color\":\"Domination\",\"iconUrl\":\"perk-images/Styles/Domination/TasteOfBlood/GreenTerror_TasteOfBlood.png\"},{\"kname\":\"\uad76\uc8fc\ub9b0 \uc0ac\ub0e5\uafbc\",\"color\":\"Domination\",\"iconUrl\":\"perk-images/Styles/Domination/RavenousHunter/RavenousHunter.png\"}]"
+        },
+        "champion": {
+          "value": "\uc544\uce7c\ub9ac",
+          "resolvedValue": "\uc544\uce7c\ub9ac"
+        },
+        "skill": {
+          "value": "[1,3,2,1,1,4,1,3,1,3,4,3]",
+          "resolvedValue": "[1,3,2,1,1,4,1,3,1,3,4,3]"
+        }
+      }
+    }
+  ]
+}
