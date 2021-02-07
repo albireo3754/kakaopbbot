@@ -3,10 +3,13 @@ from flask_restful import Resource, Api, abort, reqparse
 from pymongo import MongoClient 
 import json
 from datetime import datetime
-app = Flask(__name__)
-api = Api(app)
-import pymongo
 from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
+api = Api(app)
+
+import pymongo
 
 # parser = reqparse.RequestParser()
 # parser.add_argument('action', action='append')
@@ -197,9 +200,9 @@ class Champion(Resource, Bot):
         # args = parser.parse_args()
         jsonData = request.get_json()
         print(request.content_type)
-        print(request.is_json)
+        print(jsonData)
         file_path = "./sample.json"
-        return
+
         with open(file_path, 'w') as outfile:
             json.dump(jsonData, outfile, indent=2)
         # print(jsonData)
@@ -225,6 +228,12 @@ class Champion(Resource, Bot):
             "statPerk": doc['statPerk']}))
         
         output = self.makeCarousel(basicCards)
+
+        a = self.makeSkillResponse(output, contexts)
+        file_path = "./sample.json"
+
+        with open(file_path, 'w') as outfile:
+            json.dump(a, outfile, indent=2)
         return self.makeSkillResponse(output, contexts)
 
 class Rune(Resource, Bot):
