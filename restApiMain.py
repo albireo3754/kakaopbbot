@@ -4,7 +4,7 @@ from pymongo import MongoClient
 import json
 from datetime import datetime
 from flask_cors import CORS
-
+from base import BASE_DIR
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
@@ -201,7 +201,7 @@ class Champion(Resource, Bot):
         jsonData = request.get_json()
         print(request.content_type)
         print(jsonData)
-        file_path = "./sample.json"
+        file_path = f"{BASE_DIR}/sample.json"
 
         with open(file_path, 'w') as outfile:
             json.dump(jsonData, outfile, indent=2)
@@ -230,7 +230,7 @@ class Champion(Resource, Bot):
         output = self.makeCarousel(basicCards)
 
         a = self.makeSkillResponse(output, contexts)
-        file_path = "./sample.json"
+        file_path = f"{BASE_DIR}/sample.json"
 
         with open(file_path, 'w') as outfile:
             json.dump(a, outfile, indent=2)
@@ -239,7 +239,7 @@ class Champion(Resource, Bot):
 class Rune(Resource, Bot):
     def post(self):
         jsonData = request.get_json()
-        file_path = "./Rune.json"
+        file_path = f"{BASE_DIR}/Rune.json"
         with open(file_path, 'w') as outfile:
             json.dump(jsonData, outfile, indent=2)
 
@@ -280,7 +280,7 @@ class Rune(Resource, Bot):
 class Item(Resource, Bot):
     def post(self):
         jsonData = request.get_json()
-        file_path = "./Item.json"
+        file_path = f"{BASE_DIR}/Item.json"
         with open(file_path, 'w') as outfile:
             json.dump(jsonData, outfile, indent=2)
         order = jsonData['action']['params']['sys_number_ordinal']
@@ -317,7 +317,7 @@ class Item(Resource, Bot):
 class Skill(Resource, Bot):
     def post(self):
         jsonData = request.get_json()
-        file_path = "./Skill.json"
+        file_path = f"{BASE_DIR}/Skill.json"
         with open(file_path, 'w') as outfile:
             json.dump(jsonData, outfile, indent=2)
         order = jsonData['action']['params']['sys_number_ordinal']

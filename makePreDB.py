@@ -3,6 +3,7 @@ import os
 import json
 from pymongo import MongoClient
 import pymongo
+from base import BASE_DIR
 client = MongoClient()
 
 pro = client["pro"]
@@ -26,7 +27,7 @@ def findParticipantId(json_data,summonerName):
             return pI.get("participantId")
 class ProData:
     def __init__(self):
-        self.prodata = pd.read_csv('nickplusID.csv',index_col= 0 ,header=0)
+        self.prodata = pd.read_csv(f'{BASE_DIR}/nickplusID.csv',index_col= 0 ,header=0)
         self.koreanPros = self.prodata.loc[lambda df: df["country"] == "Korea" , ["name","team","nickname"]]
         
 class DataDragon:
@@ -37,27 +38,27 @@ class DataDragon:
         self.rune = self.getRuneData()
         self.orrn = self.getOrrnData()
     def getChampionData(self):
-        with open("jsonCol/champion.json") as json_file:
+        with open(f"{BASE_DIR}/jsonCol/champion.json") as json_file:
             json_data = json.load(json_file)
         return json_data
 
     def getSpellData(self):
-        with open("jsonCol/spell.json") as json_file:
+        with open(f"{BASE_DIR}/jsonCol/spell.json") as json_file:
             json_data = json.load(json_file)
         return json_data
 
     def getItemData(self):
-        with open("jsonCol/item.json") as json_file:
+        with open(f"{BASE_DIR}/jsonCol/item.json") as json_file:
             json_data = json.load(json_file)
         return json_data
     
     def getRuneData(self):
-        with open("jsonCol/rune.json") as json_file:
+        with open(f"{BASE_DIR}/jsonCol/rune.json") as json_file:
             json_data = json.load(json_file)
         return json_data
 
     def getOrrnData(self):
-        with open("jsonCol/orrnItem.json") as json_file:
+        with open(f"{BASE_DIR}/jsonCol/orrnItem.json") as json_file:
             json_data = json.load(json_file)
         return json_data
 
@@ -132,15 +133,16 @@ class Query(GetData):
             proZip = self.proData.koreanPros.loc[i]
             #name = 시간빠르다앙,Kellin = nickname,Team =  Dynamics,
             name, team, nickname = proZip["name"], proZip["team"], proZip["nickname"]
-            
-            for jsonURL in os.listdir(f"match/{nickname}"):
+            if not os.path.isdir(f"{BASE_DIR}/match/{nickname}"):
+                continue
+            for jsonURL in os.listdir(f"{BASE_DIR}/match/{nickname}"):
                 print(jsonURL,"is")
                 try:
-                    json_data = self.getMatchJson(f"match/{nickname}/{jsonURL}")
-                    time_data = self.getTimelineJson(f"timeline/{nickname}/{jsonURL}")
+                    json_data = self.getMatchJson(f"{BASE_DIR}/match/{nickname}/{jsonURL}")
+                    time_data = self.getTimelineJson(f"{BASE_DIR}/timeline/{nickname}/{jsonURL}")
                 except:
-                    print(f"match/{nickname}/{jsonURL}")
-                    print(f"timeline/{nickname}/{jsonURL}")
+                    print(f"{BASE_DIR}/match/{nickname}/{jsonURL}")
+                    print(f"{BASE_DIR}/timeline/{nickname}/{jsonURL}")
                     continue
                 
                 
@@ -210,8 +212,8 @@ class Query(GetData):
             #name = 시간빠르다앙,Kellin = nickname,Team =  Dynamics,
             name, team, nickname = proZip["name"], proZip["team"], proZip["nickname"]
             
-            for jsonURL in os.listdir(f"match/{nickname}"):
-                with open(f"match/{nickname}/{jsonURL}") as json_file:
+            for jsonURL in os.listdir(f"{BASE_DIR}/match/{nickname}"):
+                with open(f"{BASE_DIR}/match/{nickname}/{jsonURL}") as json_file:
                     json_data = json.load(json_file)
 
                 try:
