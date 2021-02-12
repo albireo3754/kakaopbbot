@@ -1,3 +1,3 @@
 class ConstURL:
     mainUrl = "https://kr.api.riotgames.com"
-    apiKey = "RGAPI-0d042a33-aeba-4115-b856-2115d3acaa98"
+    apiKey = "RGAPI-417a63f1-d841-42b9-a1f4-ac4fc75e3a3e"
