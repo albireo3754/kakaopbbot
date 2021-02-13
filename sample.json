@@ -7,10 +7,10 @@
           "type": "basicCard",
           "items": [
             {
-              "title": "Ganknam(BRB \uac31\ub0a8)",
-              "description": "Kda:3 / 5 / 4 version: 10.25",
+              "title": "Oscar(\ucfe4\ub514\ud310\ub2e4Hero)",
+              "description": "Kda:6 / 6 / 6 version: 10.25",
               "thumbnail": {
-                "imageUrl": "http://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/HailOfBlades/HailOfBlades.png"
+                "imageUrl": "http://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/DarkHarvest/DarkHarvest.png"
               },
               "buttons": [
                 {
@@ -31,10 +31,10 @@
               ]
             },
             {
-              "title": "KaKAO(\ubcd1\uad8c\uc88c)",
-              "description": "Kda:6 / 5 / 5 version: 10.25",
+              "title": "Keria(T1 Keria)",
+              "description": "Kda:5 / 5 / 3 version: 10.25",
               "thumbnail": {
-                "imageUrl": "http://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/HailOfBlades/HailOfBlades.png"
+                "imageUrl": "http://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/DarkHarvest/DarkHarvest.png"
               },
               "buttons": [
                 {
@@ -55,10 +55,10 @@
               ]
             },
             {
-              "title": "Clid(Gen G Clid)",
-              "description": "Kda:5 / 5 / 7 version: 10.25",
+              "title": "Blanc(Hamblanc)",
+              "description": "Kda:5 / 1 / 12 version: 10.24",
               "thumbnail": {
-                "imageUrl": "http://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/HailOfBlades/HailOfBlades.png"
+                "imageUrl": "http://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/DarkHarvest/DarkHarvest.png"
               },
               "buttons": [
                 {
@@ -77,54 +77,6 @@
                   "messageText": "3\ubc88 \uc120\uc218\uc758 \uc2a4\ud0ac\ud2b8\ub9ac"
                 }
               ]
-            },
-            {
-              "title": "GuGer(3C2G GuGer)",
-              "description": "Kda:11 / 5 / 9 version: 10.25",
-              "thumbnail": {
-                "imageUrl": "http://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/HailOfBlades/HailOfBlades.png"
-              },
-              "buttons": [
-                {
-                  "label": "\ub8ec \ubcf4\ub7ec\uac00\uae30",
-                  "action": "message",
-                  "messageText": "4\ubc88 \uc120\uc218\uc758 \ub8ec"
-                },
-                {
-                  "label": "\ucd5c\uc885\uc544\uc774\ud15c \ubcf4\ub7ec\uac00\uae30",
-                  "action": "message",
-                  "messageText": "4\ubc88 \uc120\uc218\uc758 \uc544\uc774\ud15c"
-                },
-                {
-                  "label": "\uc2a4\ud0ac\ud2b8\ub9ac \ubcf4\ub7ec\uac00\uae30",
-                  "action": "message",
-                  "messageText": "4\ubc88 \uc120\uc218\uc758 \uc2a4\ud0ac\ud2b8\ub9ac"
-                }
-              ]
-            },
-            {
-              "title": "Syu(\ud788\ud0a4\uc29d\uc288)",
-              "description": "Kda:16 / 10 / 7 version: 10.25",
-              "thumbnail": {
-                "imageUrl": "http://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/HailOfBlades/HailOfBlades.png"
-              },
-              "buttons": [
-                {
-                  "label": "\ub8ec \ubcf4\ub7ec\uac00\uae30",
-                  "action": "message",
-                  "messageText": "5\ubc88 \uc120\uc218\uc758 \ub8ec"
-                },
-                {
-                  "label": "\ucd5c\uc885\uc544\uc774\ud15c \ubcf4\ub7ec\uac00\uae30",
-                  "action": "message",
-                  "messageText": "5\ubc88 \uc120\uc218\uc758 \uc544\uc774\ud15c"
-                },
-                {
-                  "label": "\uc2a4\ud0ac\ud2b8\ub9ac \ubcf4\ub7ec\uac00\uae30",
-                  "action": "message",
-                  "messageText": "5\ubc88 \uc120\uc218\uc758 \uc2a4\ud0ac\ud2b8\ub9ac"
-                }
-              ]
             }
           ]
         }
@@ -139,23 +91,23 @@
         "ttl": 60,
         "params": {
           "runeName": [
-            "HailOfBlades",
-            "TasteOfBlood",
+            "DarkHarvest",
+            "CheapShot",
             "EyeballCollection",
             "RavenousHunter",
             "PresenceOfMind",
-            "LegendBloodline"
+            "CoupDeGrace"
           ],
           "runeDetail": [
             {
-              "kname": "\uce7c\ub0a0\ube44",
+              "kname": "\uc5b4\ub460\uc758 \uc218\ud655",
               "color": "Domination",
-              "iconUrl": "perk-images/Styles/Domination/HailOfBlades/HailOfBlades.png"
+              "iconUrl": "perk-images/Styles/Domination/DarkHarvest/DarkHarvest.png"
             },
             {
-              "kname": "\ud53c\uc758 \ub9db",
+              "kname": "\ube44\uc5f4\ud55c \ud55c \ubc29",
               "color": "Domination",
-              "iconUrl": "perk-images/Styles/Domination/TasteOfBlood/GreenTerror_TasteOfBlood.png"
+              "iconUrl": "perk-images/Styles/Domination/CheapShot/CheapShot.png"
             },
             {
               "kname": "\uc0ac\ub0e5\uc758 \uc99d\ud45c",
@@ -173,34 +125,42 @@
               "iconUrl": "perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png"
             },
             {
-              "kname": "\uc804\uc124: \ud54f\ube5b \uae38",
+              "kname": "\ucd5c\ud6c4\uc758 \uc77c\uaca9",
               "color": "Precision",
-              "iconUrl": "perk-images/Styles/Precision/LegendBloodline/LegendBloodline.png"
+              "iconUrl": "perk-images/Styles/Precision/CoupDeGrace/CoupDeGrace.png"
             }
           ],
           "itemKey": [
+            "3020",
+            "3135",
+            "3157",
             null,
-            "3070",
-            "1001",
-            "1055",
-            "6672",
-            "1037",
-            "3363"
+            "1056",
+            "6655",
+            "3364"
           ],
           "skill": [
+            3,
             1,
             2,
-            3,
             1,
             1,
             4,
-            1,
             3,
             1,
-            3
+            1,
+            3,
+            3,
+            3,
+            4,
+            2,
+            2,
+            4,
+            2,
+            2
           ],
           "statPerk": [
-            "5005",
+            "5008",
             "5008",
             "5002"
           ]
@@ -212,28 +172,28 @@
         "ttl": 60,
         "params": {
           "runeName": [
-            "HailOfBlades",
-            "TasteOfBlood",
-            "EyeballCollection",
+            "DarkHarvest",
+            "CheapShot",
+            "ZombieWard",
             "RavenousHunter",
             "PresenceOfMind",
-            "LegendAlacrity"
+            "CoupDeGrace"
           ],
           "runeDetail": [
             {
-              "kname": "\uce7c\ub0a0\ube44",
+              "kname": "\uc5b4\ub460\uc758 \uc218\ud655",
               "color": "Domination",
-              "iconUrl": "perk-images/Styles/Domination/HailOfBlades/HailOfBlades.png"
+              "iconUrl": "perk-images/Styles/Domination/DarkHarvest/DarkHarvest.png"
             },
             {
-              "kname": "\ud53c\uc758 \ub9db",
+              "kname": "\ube44\uc5f4\ud55c \ud55c \ubc29",
               "color": "Domination",
-              "iconUrl": "perk-images/Styles/Domination/TasteOfBlood/GreenTerror_TasteOfBlood.png"
+              "iconUrl": "perk-images/Styles/Domination/CheapShot/CheapShot.png"
             },
             {
-              "kname": "\uc0ac\ub0e5\uc758 \uc99d\ud45c",
+              "kname": "\uc880\ube44 \uc640\ub4dc",
               "color": "Domination",
-              "iconUrl": "perk-images/Styles/Domination/EyeballCollection/EyeballCollection.png"
+              "iconUrl": "perk-images/Styles/Domination/ZombieWard/ZombieWard.png"
             },
             {
               "kname": "\uad76\uc8fc\ub9b0 \uc0ac\ub0e5\uafbc",
@@ -246,42 +206,32 @@
               "iconUrl": "perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png"
             },
             {
-              "kname": "\uc804\uc124: \ubbfc\ucca9\ud568",
+              "kname": "\ucd5c\ud6c4\uc758 \uc77c\uaca9",
               "color": "Precision",
-              "iconUrl": "perk-images/Styles/Precision/LegendAlacrity/LegendAlacrity.png"
+              "iconUrl": "perk-images/Styles/Precision/CoupDeGrace/CoupDeGrace.png"
             }
           ],
           "itemKey": [
-            "6671",
-            "3031",
-            "3006",
-            "3085",
-            "6675",
-            "1018",
-            "3363"
+            "4636",
+            "1011",
+            "1082",
+            "3020",
+            "1026",
+            "1052",
+            "3364"
           ],
           "skill": [
             1,
             2,
-            1,
             3,
+            1,
             1,
             4,
             1,
-            2,
-            1,
-            2,
-            4,
-            2,
-            2,
-            3,
-            3,
-            4,
-            3,
             3
           ],
           "statPerk": [
-            "5005",
+            "5008",
             "5008",
             "5002"
           ]
@@ -293,23 +243,23 @@
         "ttl": 60,
         "params": {
           "runeName": [
-            "HailOfBlades",
-            "TasteOfBlood",
+            "DarkHarvest",
+            "CheapShot",
             "EyeballCollection",
             "RavenousHunter",
-            "PresenceOfMind",
-            "LegendAlacrity"
+            "MagicalFootwear",
+            "CosmicInsight"
           ],
           "runeDetail": [
             {
-              "kname": "\uce7c\ub0a0\ube44",
+              "kname": "\uc5b4\ub460\uc758 \uc218\ud655",
               "color": "Domination",
-              "iconUrl": "perk-images/Styles/Domination/HailOfBlades/HailOfBlades.png"
+              "iconUrl": "perk-images/Styles/Domination/DarkHarvest/DarkHarvest.png"
             },
             {
-              "kname": "\ud53c\uc758 \ub9db",
+              "kname": "\ube44\uc5f4\ud55c \ud55c \ubc29",
               "color": "Domination",
-              "iconUrl": "perk-images/Styles/Domination/TasteOfBlood/GreenTerror_TasteOfBlood.png"
+              "iconUrl": "perk-images/Styles/Domination/CheapShot/CheapShot.png"
             },
             {
               "kname": "\uc0ac\ub0e5\uc758 \uc99d\ud45c",
@@ -322,29 +272,29 @@
               "iconUrl": "perk-images/Styles/Domination/RavenousHunter/RavenousHunter.png"
             },
             {
-              "kname": "\uce68\ucc29",
-              "color": "Precision",
-              "iconUrl": "perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png"
+              "kname": "\ub9c8\ubc95\uc758 \uc2e0\ubc1c",
+              "color": "Inspiration",
+              "iconUrl": "perk-images/Styles/Inspiration/MagicalFootwear/MagicalFootwear.png"
             },
             {
-              "kname": "\uc804\uc124: \ubbfc\ucca9\ud568",
-              "color": "Precision",
-              "iconUrl": "perk-images/Styles/Precision/LegendAlacrity/LegendAlacrity.png"
+              "kname": "\uc6b0\uc8fc\uc801 \ud1b5\ucc30\ub825",
+              "color": "Inspiration",
+              "iconUrl": "perk-images/Styles/Inspiration/CosmicInsight/CosmicInsight.png"
             }
           ],
           "itemKey": [
-            "6671",
-            "3085",
-            "1038",
-            "3006",
-            "1055",
-            "1037",
-            "3363"
+            null,
+            "2031",
+            "6653",
+            "4637",
+            null,
+            "3020",
+            "3364"
           ],
           "skill": [
             1,
+            3,
             2,
-            3,
             1,
             1,
             4,
@@ -352,169 +302,12 @@
             3,
             1,
             3,
-            4,
-            3,
-            3
+            4
           ],
           "statPerk": [
-            "5005",
             "5008",
-            "5002"
-          ]
-        }
-      },
-      {
-        "name": "select_champion_4",
-        "lifeSpan": 5,
-        "ttl": 60,
-        "params": {
-          "runeName": [
-            "HailOfBlades",
-            "TasteOfBlood",
-            "EyeballCollection",
-            "RavenousHunter",
-            "PresenceOfMind",
-            "LegendBloodline"
-          ],
-          "runeDetail": [
-            {
-              "kname": "\uce7c\ub0a0\ube44",
-              "color": "Domination",
-              "iconUrl": "perk-images/Styles/Domination/HailOfBlades/HailOfBlades.png"
-            },
-            {
-              "kname": "\ud53c\uc758 \ub9db",
-              "color": "Domination",
-              "iconUrl": "perk-images/Styles/Domination/TasteOfBlood/GreenTerror_TasteOfBlood.png"
-            },
-            {
-              "kname": "\uc0ac\ub0e5\uc758 \uc99d\ud45c",
-              "color": "Domination",
-              "iconUrl": "perk-images/Styles/Domination/EyeballCollection/EyeballCollection.png"
-            },
-            {
-              "kname": "\uad76\uc8fc\ub9b0 \uc0ac\ub0e5\uafbc",
-              "color": "Domination",
-              "iconUrl": "perk-images/Styles/Domination/RavenousHunter/RavenousHunter.png"
-            },
-            {
-              "kname": "\uce68\ucc29",
-              "color": "Precision",
-              "iconUrl": "perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png"
-            },
-            {
-              "kname": "\uc804\uc124: \ud54f\ube5b \uae38",
-              "color": "Precision",
-              "iconUrl": "perk-images/Styles/Precision/LegendBloodline/LegendBloodline.png"
-            }
-          ],
-          "itemKey": [
-            "1038",
-            "3140",
-            "3031",
-            "3085",
-            "3006",
-            "6672",
-            "3363"
-          ],
-          "skill": [
-            3,
-            2,
-            1,
-            2,
-            2,
-            4,
-            2,
-            3,
-            2,
-            3,
-            4,
-            3
-          ],
-          "statPerk": [
-            "5005",
             "5008",
-            "5002"
-          ]
-        }
-      },
-      {
-        "name": "select_champion_5",
-        "lifeSpan": 5,
-        "ttl": 60,
-        "params": {
-          "runeName": [
-            "HailOfBlades",
-            "TasteOfBlood",
-            "EyeballCollection",
-            "RelentlessHunter",
-            "PresenceOfMind",
-            "LegendAlacrity"
-          ],
-          "runeDetail": [
-            {
-              "kname": "\uce7c\ub0a0\ube44",
-              "color": "Domination",
-              "iconUrl": "perk-images/Styles/Domination/HailOfBlades/HailOfBlades.png"
-            },
-            {
-              "kname": "\ud53c\uc758 \ub9db",
-              "color": "Domination",
-              "iconUrl": "perk-images/Styles/Domination/TasteOfBlood/GreenTerror_TasteOfBlood.png"
-            },
-            {
-              "kname": "\uc0ac\ub0e5\uc758 \uc99d\ud45c",
-              "color": "Domination",
-              "iconUrl": "perk-images/Styles/Domination/EyeballCollection/EyeballCollection.png"
-            },
-            {
-              "kname": "\ub048\uc9c8\uae34 \uc0ac\ub0e5\uafbc",
-              "color": "Domination",
-              "iconUrl": "perk-images/Styles/Domination/RelentlessHunter/RelentlessHunter.png"
-            },
-            {
-              "kname": "\uce68\ucc29",
-              "color": "Precision",
-              "iconUrl": "perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png"
-            },
-            {
-              "kname": "\uc804\uc124: \ubbfc\ucca9\ud568",
-              "color": "Precision",
-              "iconUrl": "perk-images/Styles/Precision/LegendAlacrity/LegendAlacrity.png"
-            }
-          ],
-          "itemKey": [
-            "6676",
-            "6672",
-            "3157",
-            "3085",
-            "3124",
-            "3006",
-            "3363"
-          ],
-          "skill": [
-            1,
-            2,
-            3,
-            1,
-            1,
-            4,
-            1,
-            2,
-            1,
-            2,
-            4,
-            2,
-            2,
-            3,
-            3,
-            4,
-            3
-          ],
-          "statPerk": [
-            "5005",
-            "5008",
-            "5002"
+            "5003"
           ]
         }
       }

@@ -2,8 +2,10 @@ from requests import get
 import json
 # http://ddragon.leagueoflegends.com/cdn/10.24.1/data/ko_KR/runesReforged.json rune
 # https://raw.communitydragon.org/10.24/game/assets/perks/styles/ link
-mainUrl = "https://kr.api.riotgames.com"
-apiKey = "RGAPI-c3acb177-4ff3-4aaf-a134-3bba00424a22"
+from ConstURL import ConstURL
+ConstURL = ConstURL()
+apiKey = ConstURL.apiKey
+mainUrl = ConstURL.mainUrl
 
 def getSummonerInf(summonerName):
     return get(mainUrl + "/lol/summoner/v4/summoners/by-name/" + summonerName + "?api_key=" +  apiKey).json()
@@ -24,17 +26,13 @@ def printJson(jsonData):
 def getGameId(accountId, cnt = 0):
     return str(getMatchlists(accountId)['matches'][0]['gameId'])
 
-for i in lists:
-    sumDict = getSummonerInf(i)
-    for k in ["profileIconId", "revisionDate", "summonerLevel"]:
-        try:
-            sumDict.pop(k)
-        except:
-            continue
-    if len(sumDict) > 2:
-        
-    
-
+# for i in lists:
+#     sumDict = getSummonerInf(i)
+#     for k in ["profileIconId", "revisionDate", "summonerLevel"]:
+#         try:
+#             sumDict.pop(k)
+#         except:
+#             continue
 
 
 # FakerAccId = getSummonerAccountId("Hide On Bush")
